@@ -1,0 +1,62 @@
+<template>
+    <lightning-card title="Product List" icon-name="standard:Product2">
+        <lightning-combobox style="width:360px; margin-left:10px; display:flexbox"
+        name="Kind Of Product"
+        label="Product List" 
+        value={value}
+        placeholder="Select view"
+        options={options}
+        onchange={handleChange} ></lightning-combobox>
+        
+        <div slot ="actions">
+            <lightning-button  label='Create Product'  onclick={showModal}>
+            </lightning-button>
+        </div>
+    </lightning-card>
+        <div class="slds-card__body_inner"><p>Selected Product: {selectedOpportunitiesLen}</p>
+            <div class="slds-grid slds-gutters slds-p-bottom_x-small slds-p-left_x-small">
+                <lightning-input type="search" onchange={handleSearch}></lightning-input>
+            </div>
+            <lightning-datatable
+            key-field="Id"
+            data={products}
+            columns={cols}
+            onrowselection={handleRowSelection}
+            onrowaction={handleRowAction}
+            ></lightning-datatable>
+        </div>
+    
+    <!--Update-->
+    <template if:true={isShowModal}>
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+                <!-- modal header start -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small" ></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">제품 수정</h2>
+                </header>
+                <!-- modal body start -->
+                <div class="slds-modal__content slds-p-around_medium" id={id}>
+                    <lightning-input label="Name" type ="Text" field-name ={name} onchange={handleNameChange} value={name} required="true" disabled="true" ></lightning-input>
+                    <lightning-input label="Description" type ="Text" field-name ={description} onchange={handleDescriptionChange} value={Description} ></lightning-input>
+                    <lightning-input label="Description2 Date" type ="Text" field-name ={description__c} onchange={handleDescription2Change} value ={Description2} ></lightning-input>
+                
+    
+                </div>
+                <!-- modal footer start-->
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+                    <lightning-button variant="Brand" label="Save" onclick={updateRecord}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    
+    </template>    
+</template>
