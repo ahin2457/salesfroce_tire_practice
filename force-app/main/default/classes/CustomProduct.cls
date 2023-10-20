@@ -1,9 +1,11 @@
 public with sharing class CustomProduct {
-    @AuraEnabled
-      public static List<Product2> getProducts(){
-        
-        return [SELECT Id, Name, Material__c, Desciption__c, Desciption2__c, Division__c, Car_Type__c,Brand__c, S_Width__c, Tire_Type__c, Type__c ,Net_Weight__c, Pattern__c, Sales_Pattern__c, Performance__c 
-                FROM Product2 ORDER BY Name ASC LIMIT 1000];
+    
+        @AuraEnabled
+        public static List<Product2> getProducts(Integer limitSize, Integer offset){
+               List<Product2> productList = [SELECT Id, Name, Material__c, Desciption__c, Desciption2__c, Division__c, Car_Type__c,Brand__c, S_Width__c, Tire_Type__c, Type__c ,Net_Weight__c, Pattern__c, Sales_Pattern__c, Performance__c 
+               FROM Product2 ORDER BY CreatedDate LIMIT :limitSize OFFSET :offset ];
+
+               return productList;
         }
 
         // search

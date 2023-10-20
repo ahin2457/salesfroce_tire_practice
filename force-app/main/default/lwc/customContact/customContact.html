@@ -1,0 +1,102 @@
+<template>
+ 
+    <template if:true={loaderSpinner}>
+        <lightning-spinner variant="brand" alternative-text="Loading..." size="medium"></lightning-spinner>
+    </template>
+ 
+    <div class="slds-box slds-theme_default">
+        <lightning-card  title="Contacts">
+            <table class="slds-table slds-table_cell-buffer slds-table_bordered">
+                <thead>
+                    <tr class="slds-line-height_reset slds-text-title_caps">
+                        <th  class="slds-is-resizable" scope="col">
+                            <div class="slds-truncate" title="Name">
+                                Name
+                            </div>
+                        </th>
+                        <th  class="slds-is-resizable" scope="col">
+                            <div class="slds-truncate" title="First Name">
+                               First Name
+                            </div>
+                        </th>
+                        <th  class="slds-is-resizable" scope="col">
+                            <div class="slds-truncate" title="Email">
+                                Email
+                            </div>
+                        </th>
+                        <th class="slds-is-resizable" scope="col">
+                            <div class="slds-truncate" title="Phone">
+                                Phone
+                            </div>
+                        </th>
+                        <th class="slds-is-resizable" scope="col">
+                            <div class="slds-truncate" title="Phone">
+                                Title
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template if:true={contacts}>
+                        <template for:each={contacts} for:item="conItem">
+                            <tr key={conItem.Id}>
+                                <th scope="row" data-label="Name">
+                                    <div class="slds-truncate" title={conItem.Name}>{conItem.Name}</div>
+                                </th>
+                                <th scope="row" data-label="Account Number">
+                                    <div class="slds-truncate" title={conItem.FirstName}>{conItem.FirstName}</div>
+                                </th>
+                                <th scope="row" data-label="Industry">
+                                    <div class="slds-truncate" title={conItem.LastName}>{conItem.LastName}</div>
+                                </th>
+                                <th scope="row" data-label="Phone">
+                                    <template if:true={conItem.Phone}>
+                                    <div class="slds-truncate" title={conItem.Phone}>{conItem.Phone}</div>
+                                </template>
+                                </th>
+                                <th scope="row" data-label="Title">
+                                    <template if:true={conItem.Title}>
+                                    <div class="slds-truncate" title={conItem.Title}>{conItem.Phone}</div>
+                                </template>
+                                </th>
+                            </tr>
+                        </template>
+                    </template>
+                </tbody>
+            </table>
+            <template if:true={isDisplayNoRecords}>
+                <div class="slds-align_absolute-center">
+                    <br/>
+                    No records found
+                </div>
+            </template>
+            <br/>
+            <div class="slds-align_absolute-center"> 
+                <div class="slds-p-right_xx-small">
+ 
+                    <lightning-button label="Prev"
+                    disabled={isPrev} onclick={handlePagePrevAction}
+                                        variant="brand"
+                                        icon-name="utility:back"
+                                        name="prev"></lightning-button>  
+                </div>
+                <span class="slds-badge slds-badge_lightest">
+                    {recordStart}-{recordEnd} of {totalRecords} | Page {pageNumber} of {totalPages}
+                </span>
+                <div class="slds-p-left_xx-small">
+                    <lightning-button label="Next"
+                    disabled={isNext} onclick={handlePageNextAction}
+                                        variant="brand"
+                                        icon-name="utility:forward"
+                                        icon-position="right"
+                                        name="next"></lightning-button>
+                </div>
+            </div>  
+ 
+ 
+            <br/><br/>
+
+  <!--End RelatedTopics Section-->
+        </lightning-card>
+    </div>
+</template>

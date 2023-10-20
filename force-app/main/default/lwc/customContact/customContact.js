@@ -1,48 +1,41 @@
 import { LightningElement, wire, api, track } from 'lwc';
  
-import getProductList from '@salesforce/apex/tireProduct.getProductList';
+import getContactList from '@salesforce/apex/contactPaginationLwcCtrl.getContactList';
  
-export default class tireProduct extends LightningElement {
+export default class ContactPaginationLwc extends LightningElement {
  
-    // @track recordEnd = 0;
-    // @track recordStart = 0;
-    // @track pageNumber = 1;
-    // @track totalRecords = 0;
-    // @track totalPages = 0;
-    // @track loaderSpinner = false;
-    // @track error = null;
-    // @track pageSize = 10;    
-    // @track isPrev = true;
-    // @track isNext = true;
-    // @track products = [];
-
-
-
-    connectedCallback() {
-        this.loadMoreData();
-    }
-
+    @track recordEnd = 0;
+    @track recordStart = 0;
+    @track pageNumber = 1;
+    @track totalRecords = 0;
+    @track totalPages = 0;
+    @track loaderSpinner = false;
+    @track error = null;
+    @track pageSize = 10;    
+    @track isPrev = true;
+    @track isNext = true;
+    @track contacts = [];
  
     connectedCallback() {
-        this.getProducts();
+        this.getContacts();
     }
  
  
     handlePageNextAction(){
         this.pageNumber = this.pageNumber+1;
-        this.getProducts();
+        this.getContacts();
     }
  
  
     handlePagePrevAction(){
         this.pageNumber = this.pageNumber-1;
-        this.getProducts();
+        this.getContacts();
     }
  
  
-    getProducts(){
+    getContacts(){
         this.loaderSpinner = true;
-        getProductList({pageSize: this.pageSize, pageNumber : this.pageNumber})
+        getContactList({pageSize: this.pageSize, pageNumber : this.pageNumber})
         .then(result => {
             this.loaderSpinner = false;
             if(result){
@@ -50,7 +43,7 @@ export default class tireProduct extends LightningElement {
                 this.recordEnd = resultData.recordEnd;
                 this.totalRecords = resultData.totalRecords;
                 this.recordStart = resultData.recordStart;
-                this.products = resultData.products;
+                this.contacts = resultData.contacts;
                 this.pageNumber = resultData.pageNumber;                
                 this.totalPages = Math.ceil(resultData.totalRecords / this.pageSize);
                 this.isNext = (this.pageNumber == this.totalPages || this.totalPages == 0);
@@ -66,8 +59,8 @@ export default class tireProduct extends LightningElement {
  
     get isDisplayNoRecords() {
         var isDisplay = true;
-        if(this.products){
-            if(this.products.length == 0){
+        if(this.contacts){
+            if(this.contacts.length == 0){
                 isDisplay = true;
             }else{
                 isDisplay = false;
@@ -76,6 +69,4 @@ export default class tireProduct extends LightningElement {
         return isDisplay;
     }
  
-     
-    
 }

@@ -1,36 +1,188 @@
 <template>
-    <lightning-card title="Product List" icon-name="standard:Product2">
-        <lightning-combobox style="width:360px; margin-left:10px; display:flexbox"
-        name="Kind Of Product"
-        label="Product List" 
-        value={value}
-        placeholder="Select view"
-        options={options}
-        onchange={handleChange} ></lightning-combobox>
-        
-        <div slot ="actions">
-            <lightning-button  label='Create Product'  onclick={showModal}>
-            </lightning-button>
-        </div>
-        <div class="slds-card__body_inner"><p>Selected Product: {selectedOpportunitiesLen}</p>
-            <div class="slds-grid slds-gutters slds-p-bottom_x-small slds-p-left_x-small" style="margin-left:10px;">
-                <lightning-input type="search" onchange={handleSearch}></lightning-input>
+        <template if:true={loaderSpinner}>
+            <lightning-spinner variant="brand" alternative-text="Loading.." size="medium"></lightning-spinner>
+        </template>
+
+    <div class="slds-box slds-theme-default" >
+        <lightning-card title="Product List" icon-name="standard:opportunity">
+            <div class="container" onscroll={handleScroll}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
+                    <thead>
+                        <tr class="slds-line-height_reset slds-text-title_caps">
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div>
+                                    Meterial    
+                                </div>                        
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                               <div class="slds-truncate" title="Desciption">
+                                    Desciption
+                               </div> 
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div class="slds-truncate" title="Desciption2">
+                                    Desciption2
+                                </div>
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div class="slds-truncate" title="Type">
+                                    Type
+                                </div> 
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div class="slds-truncate" title="Car Type">
+                                    Car Type
+                                </div>
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div class="slds-truncate" title="Brand">
+                                    Brand
+                                </div>  
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div class="slds-truncate" title="Tire Type">
+                                    Tire Type
+                                </div>    
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template if:true={products}>
+                            <template for:each={products} for:item="prodItem">
+                                <tr key={prodItem.Id}>
+                                    <td scope="row" data-label="Material">
+                                        <div class="slds-truncate" title={prodItem.Material__c}>{prodItem.Material__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Desciption">
+                                        <div class="slds-truncate" title={prodItem.Desciption__c}>{prodItem.Desciption__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Desciption2">
+                                        <div class="slds-truncate" title={prodItem.Desciption2__c}>{prodItem.Desciption2__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Type">
+                                        <div class="slds-truncate" title={prodItem.Type__c}>{prodItem.Type__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Car Tyep">
+                                        <div class="slds-truncate" title={prodItem.Car_Type__c}>{prodItem.Car_Type__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Brand">
+                                        <div class="slds-truncate" title={prodItem.Brand__c}>{prodItem.Brand__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Tire Type">
+                                        <div class="slds-truncate" title={prodItem.Tire_Type__c}>{prodItem.Tire_Type__c}</div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                </table><table class="slds-table slds-table_cell-buffer slds-table_bordered" >
+                    <thead>
+                        <tr class="slds-line-height_reset slds-text-title_caps">
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div>
+                                    Meterial    
+                                </div>                        
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                               <div class="slds-truncate" title="Desciption">
+                                    Desciption
+                               </div> 
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div class="slds-truncate" title="Desciption2">
+                                    Desciption2
+                                </div>
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div class="slds-truncate" title="Type">
+                                    Type
+                                </div> 
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div class="slds-truncate" title="Car Type">
+                                    Car Type
+                                </div>
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div class="slds-truncate" title="Brand">
+                                    Brand
+                                </div>  
+                            </th>
+                            <th class="slds-is-resizalbe" scope="col">
+                                <div class="slds-truncate" title="Tire Type">
+                                    Tire Type
+                                </div>    
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template if:true={products}>
+                            <template for:each={products} for:item="prodItem">
+                                <tr key={prodItem.Id}>
+                                    <td scope="row" data-label="Material">
+                                        <div class="slds-truncate" title={prodItem.Material__c}>{prodItem.Material__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Desciption">
+                                        <div class="slds-truncate" title={prodItem.Desciption__c}>{prodItem.Desciption__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Desciption2">
+                                        <div class="slds-truncate" title={prodItem.Desciption2__c}>{prodItem.Desciption2__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Type">
+                                        <div class="slds-truncate" title={prodItem.Type__c}>{prodItem.Type__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Car Tyep">
+                                        <div class="slds-truncate" title={prodItem.Car_Type__c}>{prodItem.Car_Type__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Brand">
+                                        <div class="slds-truncate" title={prodItem.Brand__c}>{prodItem.Brand__c}</div>
+                                    </td>
+                                    <td scope="row" data-label="Tire Type">
+                                        <div class="slds-truncate" title={prodItem.Tire_Type__c}>{prodItem.Tire_Type__c}</div>
+                                    </td>
+                                </tr>
+                            </template>
+                        </template>
+                    </tbody>
+                </table>
             </div>
-            <lightning-datatable
-            key-field="Id"
-            data={products}
-            columns={cols}
-            onrowselection={handleRowSelection}
-            onrowaction={handleRowAction}
-            ></lightning-datatable>
-        </div>
-    </lightning-card>
-        
+            <template if:true={isDisplayNoRecords}>
+                    <div class="slds-align_absolute-center">
+                        <p>No records found</p>
+                    </div>
+            </template>
+            <div class="slds-align_absolute-center">
+                <div class="slds-p-right_xx_small">
+                        <lightning-button label="Prev"
+                            disabled={isPrev} 
+                            onclick={handlePagePrevAction}
+                            variant="brand"
+                            icon-name="utility:back"
+                            name="prev"></lightning-button>
+                </div>
+                <span class="slds-badge slds-badge_lightest">
+                    {recordStart}-{recordEnd} of {totalRecords} | Page {pageNumber} of {totalPages}
+                </span>
+                <div class="slds-p-left xx-small">
+                    <lightning-button label="Next"
+                            disabled={isNext} 
+                            onclick={handlePageNextAction}
+                            variant="brand"
+                            icon-name="uility:forward"
+                            icon-position="right"
+                            name="next">                 
+                    </lightning-button>
+
+                </div>
+            </div>
+          
+            
+        </lightning-card>
+    </div>
 
 
-
-        <!--Update-->
-        <template if:true={isShowModal}>
+    <!-- eidt 모달 -->
+    <template if:true={isShowModal}>
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-02" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
                 <!-- modal header start -->
@@ -46,9 +198,9 @@
                 </header>
                 <!-- modal body start -->
                 <div class="slds-modal__content slds-p-around_medium" id={id}>
-                    <lightning-input label="Name" type ="Text" field-name ={name} onchange={handleNameChange} value={name} required="true" disabled="true" ></lightning-input>
-                    <lightning-input label="Description" type ="Text" field-name ={description} onchange={handleDescriptionChange} value={Description} ></lightning-input>
-                    <lightning-input label="Description2 Date" type ="Text" field-name ={description__c} onchange={handleDescription2Change} value ={Description2} ></lightning-input>
+                    <lightning-input label="Name" type="Text" field-name ={recordName} onchange={handleRecordIdChange} value={recordName} required="true" disabled="true" ></lightning-input>
+                    <lightning-input label="Desciption" type ="Text" field-name ={desciption} onchange={handleDesciptionChange} value={Desciption} ></lightning-input>
+                    <lightning-input label="Description2" type ="Text" field-name ={desciption2} onchange={handleDesciption2Change} value ={Desciption2} ></lightning-input>
                     
                     
                 </div>
@@ -61,5 +213,7 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
         
-    </template>    
+    </template> 
+    
+  
 </template>
