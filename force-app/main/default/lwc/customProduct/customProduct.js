@@ -3,9 +3,6 @@ import getProducts from '@salesforce/apex/CustomProduct.getProducts';
 import searchProduct from '@salesforce/apex/CustomProduct.searchProduct';
 import updateRecordData from '@salesforce/apex/CustomProduct.updateRecordData';
 import getProductsInfo from '@salesforce/apex/CustomProduct.getProductsInfo';
-import getProductList from '@salesforce/apex/CustomProduct.getProductList';
-import ID_FIELD from '@salesforce/schema/Account.Id';
-import NAME_FIELD from '@salesforce/schema/Account.Name';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent}  from 'lightning/platformShowToastEvent';
 import { refreshApex } from '@salesforce/apex';
@@ -41,9 +38,7 @@ export default class CustomProduct extends LightningElement {
     cols = COLUMN;
     products;
     isDisabled = true; // 수정 버튼 비활성화 여부
-    error;
-    rowLimit = 20;
-    rowOffSet=0;
+ 
  
     showModal(){
         this.isShowModal = true;
@@ -55,7 +50,10 @@ export default class CustomProduct extends LightningElement {
 
     // select data
    connectedCallback(){
+       console.log('전',this.viewAll());
          this.viewAll();
+         console.log('후',this.viewAll());
+         
     }
 
    // select data
@@ -185,44 +183,7 @@ export default class CustomProduct extends LightningElement {
     }
 
     
-    // pagination
-    handlePrevious(event){
-            this.dispatchEvent(new CustomEvent('previous'));
-    }
-        
-    handleNext(event){
-        this.dispatchEvent(new CustomEvent('next'));
-     }
-
-     connectedCallback(){
-        this.loadData();
-     }
-
-     async loadData(){
-        return await getProductList({ limitSize: this.rowLimit , offset : this.rowOffSet })
-        .then(result => {
-            let updatedRecords = [...this.products, ...result];
-            this.products = updatedRecords;
-            this.error = undefined;
-        })
-        .catch(error => {
-            this.error = error;
-            this.products = undefined;
-        });
-    }
-  
-
-    loadMoreDataHandler(event) {
-        const currentRecord = this.accounts;
-        const { target } = event;
-        target.isLoading = true;
- 
-        this.rowOffSet = this.rowOffSet + this.rowLimit;
-        this.loadData()
-            .then(()=> {
-                target.isLoading = false;
-            });   
-    }
+    
 
 
 }

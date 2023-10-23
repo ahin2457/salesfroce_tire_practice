@@ -3,9 +3,16 @@
             <lightning-spinner variant="brand" alternative-text="Loading.." size="medium"></lightning-spinner>
         </template>
 
-    <div class="slds-box slds-theme-default" >
-        <lightning-card title="Product List" icon-name="standard:opportunity">
-            <div class="container" onscroll={handleScroll}>
+
+        
+        
+        
+        <div class="slds-box slds-theme-default" >
+            <lightning-card title="Product List" icon-name="standard:opportunity">
+                <div class="slds-grid slds-gutters slds-p-bottom_x-small slds-p-left_x-small" style="margin-left:10px;">
+                    <lightning-input type="search" onchange={handleSearch}></lightning-input>
+                </div>
+                <div class="container" onscroll={loadMoreData} style="height: 800px; overflow-y: auto;">
                 <table class="slds-table slds-table_cell-buffer slds-table_bordered" >
                     <thead>
                         <tr class="slds-line-height_reset slds-text-title_caps">
@@ -30,76 +37,7 @@
                                 </div> 
                             </th>
                             <th class="slds-is-resizalbe" scope="col">
-                                <div class="slds-truncate" title="Car Type">
-                                    Car Type
-                                </div>
-                            </th>
-                            <th class="slds-is-resizalbe" scope="col">
-                                <div class="slds-truncate" title="Brand">
-                                    Brand
-                                </div>  
-                            </th>
-                            <th class="slds-is-resizalbe" scope="col">
-                                <div class="slds-truncate" title="Tire Type">
-                                    Tire Type
-                                </div>    
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <template if:true={products}>
-                            <template for:each={products} for:item="prodItem">
-                                <tr key={prodItem.Id}>
-                                    <td scope="row" data-label="Material">
-                                        <div class="slds-truncate" title={prodItem.Material__c}>{prodItem.Material__c}</div>
-                                    </td>
-                                    <td scope="row" data-label="Desciption">
-                                        <div class="slds-truncate" title={prodItem.Desciption__c}>{prodItem.Desciption__c}</div>
-                                    </td>
-                                    <td scope="row" data-label="Desciption2">
-                                        <div class="slds-truncate" title={prodItem.Desciption2__c}>{prodItem.Desciption2__c}</div>
-                                    </td>
-                                    <td scope="row" data-label="Type">
-                                        <div class="slds-truncate" title={prodItem.Type__c}>{prodItem.Type__c}</div>
-                                    </td>
-                                    <td scope="row" data-label="Car Tyep">
-                                        <div class="slds-truncate" title={prodItem.Car_Type__c}>{prodItem.Car_Type__c}</div>
-                                    </td>
-                                    <td scope="row" data-label="Brand">
-                                        <div class="slds-truncate" title={prodItem.Brand__c}>{prodItem.Brand__c}</div>
-                                    </td>
-                                    <td scope="row" data-label="Tire Type">
-                                        <div class="slds-truncate" title={prodItem.Tire_Type__c}>{prodItem.Tire_Type__c}</div>
-                                    </td>
-                                </tr>
-                            </template>
-                        </template>
-                    </tbody>
-                </table><table class="slds-table slds-table_cell-buffer slds-table_bordered" >
-                    <thead>
-                        <tr class="slds-line-height_reset slds-text-title_caps">
-                            <th class="slds-is-resizalbe" scope="col">
-                                <div>
-                                    Meterial    
-                                </div>                        
-                            </th>
-                            <th class="slds-is-resizalbe" scope="col">
-                               <div class="slds-truncate" title="Desciption">
-                                    Desciption
-                               </div> 
-                            </th>
-                            <th class="slds-is-resizalbe" scope="col">
-                                <div class="slds-truncate" title="Desciption2">
-                                    Desciption2
-                                </div>
-                            </th>
-                            <th class="slds-is-resizalbe" scope="col">
-                                <div class="slds-truncate" title="Type">
-                                    Type
-                                </div> 
-                            </th>
-                            <th class="slds-is-resizalbe" scope="col">
-                                <div class="slds-truncate" title="Car Type">
+                                <div class="slds-truncate" title="Car Type">i
                                     Car Type
                                 </div>
                             </th>
